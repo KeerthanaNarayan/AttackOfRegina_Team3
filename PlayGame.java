@@ -1,4 +1,6 @@
-// Manages the game (passes variable between the different classes)
+
+
+// Manages the game
 
 public class PlayGame {
 
@@ -24,7 +26,7 @@ public class PlayGame {
         String MoveString = UserInput.AskWhereToMove();
 
 
-        //TEST IF ABOVE FUNCTION ACTUALLY RA
+        //TEST IF ABOVE FUNCTION ACTUALLY RAN
         System.out.println(MoveString);
     }
 
