@@ -1,0 +1,3 @@
+Need to valdiate th inputs from the user to check if an int is entered.
+
+Need to validate user movement at board boundaries.

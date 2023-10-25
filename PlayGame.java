@@ -1,33 +1,60 @@
+/*
+=================================================================================================================                                                                                                                 
+ ______   ______   ______   __   __   __   ______       ______   ______   __   ______   __   __   __   ______    
+/\  == \ /\  ___\ /\  ___\ /\ \ /\ "-.\ \ /\  __ \     /\  __ \ /\  == \ /\ \ /\  ___\ /\ \ /\ "-.\ \ /\  ___\   
+\ \  __< \ \  __\ \ \ \__ \\ \ \\ \ \-.  \\ \  __ \    \ \ \/\ \\ \  __< \ \ \\ \ \__ \\ \ \\ \ \-.  \\ \___  \  
+ \ \_\ \_\\ \_____\\ \_____\\ \_\\ \_\\"\_\\ \_\ \_\    \ \_____\\ \_\ \_\\ \_\\ \_____\\ \_\\ \_\\"\_\\/\_____\ 
+  \/_/ /_/ \/_____/ \/_____/ \/_/ \/_/ \/_/ \/_/\/_/     \/_____/ \/_/ /_/ \/_/ \/_____/ \/_/ \/_/ \/_/ \/_____/ 
 
+=================================================================================================================                                                                                                                 
+*/
 
-// Manages the game
+// Manages the game. When the main method is run, the game runs.
+
 
 public class PlayGame {
-
-    //String to keep track of the game state
-    private String GameState;
-
-
-    // Constructor for PlayGame class. Instantiates the game in an inProgress state.
-    public PlayGame() {
-        // at construction, we assume the game state is InProgress
-        this.GameState = "InProgress";
-    }
-
-
-    // Main method for play game.
+    // Main method to play the game.
     public static void main(String[] args) {
-
-
-        // GAME CODE CALLING OTHER CLASSES 
-
         
-        // EXAMPLE OF RUNNING ANOTHER CLASS (UserInput.AskWhereToMove)
-        String MoveString = UserInput.AskWhereToMove();
+        // Create a variable that keeps track of the game state.
+        String GameState = "InProgress";
+
+        // Instantiate the UserInput class
+        // Query the user for the grid dimension.
+        int gridSize = UserInput.AskGridDimension();
+        // Instantiate the GridState class with the gridSize specified by the user.
+        GridState CurrentGridState = new GridState(gridSize);
+        // Initialise the grid, populating it with chips, donald and reginas.
+
+        while (GameState == "InProgress") {
+            // Print the current grid
+            CurrentGridState.PrintGrid();
+
+            // ask the player to move
+            // Prompt the user to input where to move. Returns either "u", "d", "l" or "r"
+            String MoveString = UserInput.AskWhereToMove();
+
+            // update the grid state based on MoveString
+            // INCLUDE EDGE CASE FOR PLAYER ON BOUNDS OF BOARD
+            CurrentGridState.UpdateGrid(MoveString);
+
+            // evaluate the grid state (to be either Win, lose or In progress)
+            // CurrentGridState.FindGameState();
+
+            // if Win, tell the user they have won
+            // if lose tell teh user they have lost
+            // if neither WIn or Lose, return to the start of the loop
+            GameState = "Won";
+
+        //}
 
 
-        //TEST IF ABOVE FUNCTION ACTUALLY RAN
-        System.out.println(MoveString);
+        }
+
+
+
     }
 
-    }
+}
+
+    
