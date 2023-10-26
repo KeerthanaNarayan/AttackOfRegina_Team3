@@ -15,9 +15,12 @@
 public class PlayGame {
     // Main method to play the game.
     public static void main(String[] args) {
-        
+
         // Create a variable that keeps track of the game state.
         String GameState = "InProgress";
+
+        // Welcome the player
+        System.out.println("Welcome to Regina: Origins");
 
         // Instantiate the UserInput class
         // Query the user for the grid dimension.
@@ -39,12 +42,19 @@ public class PlayGame {
             CurrentGridState.UpdateGrid(MoveString);
 
             // evaluate the grid state (to be either Win, lose or In progress)
-            // CurrentGridState.FindGameState();
+            GameState =CurrentGridState.FindGameState();
 
             // if Win, tell the user they have won
             // if lose tell teh user they have lost
             // if neither WIn or Lose, return to the start of the loop
-            GameState = "Won";
+
+            if (GameState=="Win") {
+                System.out.println("YOU WON!");
+            }
+
+            else if (GameState=="Lose") {
+                System.out.println("YOU LOSE!");
+            }
 
         //}
 

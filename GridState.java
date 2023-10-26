@@ -82,45 +82,96 @@ public class GridState {
         }
 
     // Updates the elements coincident with playerPos, treasurePos and monsterPos with corresponding numeric values 
-    public void PlacePosOnGrid(){
+    public void PlacePosOnGrid()
+        {
+            // Place a one on the ithgrid location coincident with player position
+            CurrentGrid[playerPos[0]][playerPos[1]]=1;
+            // PLace a 5 where the grid location is coincident with treasurePos
+            // CurrentGrid[treasurePos[0]][treasurePos[1]]=5;
+            // Place a 2 where the grid location is coincident with monsterPos
+            // CurrentGrid[monsterPos[0]][monsterPos[1]]=2;
+        }
 
-        // loop through all indices of the array
-         for(int i = 0; i < this.gridSize; i++)
-            {
-                for(int j = 0; j < this.gridSize; j++)
-                {
-                    // if the indices are coincident with the location of the player, update that tile from 0 to 1
-                    if (i == playerPos[0] && j == playerPos[1]){
-                        CurrentGrid[i][j] = 1;
-                    }  
-                    // if the indices are coincident with the location of the treasure, update that tile from 0 to 5
-                    if (i == treasurePos[0] && j == treasurePos[1]){
-                        CurrentGrid[i][j] = 5;
-                    }
-                    // if the indices are coincident with the location of the monster, update that tile from 0 to 2
-                    if (i == monsterPos[0] && j == monsterPos[1]){
-                        CurrentGrid[i][j] = 2;
-                    }
-                }
-            }
-    }
-
-    public  int[][] getCurrentGrid() 
-    {
-        return CurrentGrid;
-    }
-
+    // Sets all non-zero tiles back to zero.
+    public void CleanSlate()
+        {
+            // Place a zero on the the grid location coincident with player position
+            CurrentGrid[playerPos[0]][playerPos[1]]=0;
+            // PLace a zero where the grid location is coincident with treasurePos
+            // CurrentGrid[treasurePos[0]][treasurePos[1]]=0;
+            // Place a zero where the grid location is coincident with monsterPos
+            // CurrentGrid[monsterPos[0]][monsterPos[1]]=0;
+        }
+    
+    // Update the playerPos field based on the player-inputted MoveString.
+    // Edge case handling for playerPos at grid boundary.
     public void UpdateGrid(String MoveString)
-    {
-    
-    switch (MoveString) {
-        case "u":case"d": case"l": case"r": break;
-    }
 
+        {
+
+        // Remember the previous position, in case we move off the board.    
+        int[] previousPos = new int[]{playerPos[0], playerPos[1]};
+
+        // Convert the grid back to all zeros
+        this.CleanSlate();
+
+        try 
+        {
+            switch (MoveString) {
+                case "u":
+                        playerPos[0]-=1;
+                        break;
+                case"d": 
+                        playerPos[0]+=1;
+                        break;
+                case"l": 
+                        playerPos[1]-=1;
+                        break;
+                case"r":
+                        playerPos[1]+=1;
+                        break;
+                default:
+                    // Don't need default as we did input validation on MoveString.
+                    break;
+        }
+            // Place the entities back on the grid, with the updated player position playerPos
+            PlacePosOnGrid();
+        }
+
+        catch (ArrayIndexOutOfBoundsException e) 
+        {
+            // Inform the player they are off the board.
+            System.out.println("You're at the edge of the board! Moving nowhere.");   
+            // Revert back to the latest "on-board" position.
+            playerPos[0] = previousPos[0];
+            playerPos[1] = previousPos[1];
+            // Place the entities back on the board.
+            PlacePosOnGrid();
+        }
+        
+            
+                
+        }
+
+    
+    public String FindGameState() {
+        if (Arrays.equals(playerPos,treasurePos)) {
+            return "Win";
+        }
+
+        else if (Arrays.equals(playerPos,monsterPos)) {
+            return "Lose";
+        }
+        else {
+            return "InProgress";
+        }
+        
+        
+    }
+    
 
     }
     
-}
 
 
     
