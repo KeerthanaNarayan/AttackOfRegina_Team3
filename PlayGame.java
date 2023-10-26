@@ -16,9 +16,6 @@ public class PlayGame {
     // Main method to play the game.
     public static void main(String[] args) {
 
-        // Create a variable that keeps track of the game state.
-        String GameState = "InProgress";
-
         // Welcome the player
         System.out.println("Welcome to Regina: Origins");
 
@@ -29,9 +26,17 @@ public class PlayGame {
         GridState CurrentGridState = new GridState(gridSize);
         // Initialise the grid, populating it with chips, donald and reginas.
 
+        // Create a variable that keeps track of the game state.
+        String GameState = "InProgress";
+
+        // while the game is InProgress ... 
         while (GameState == "InProgress") {
+
             // Print the current grid
             CurrentGridState.PrintGrid();
+
+            // Print the distance from the treasure
+            CurrentGridState.FindPlayerDistanceFromTreasure();
 
             // ask the player to move
             // Prompt the user to input where to move. Returns either "u", "d", "l" or "r"

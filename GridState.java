@@ -1,6 +1,7 @@
 
 import java.util.Arrays;
 import java.util.Random;
+import java.lang.Math;
 
 
 
@@ -79,6 +80,8 @@ public class GridState {
 
                 }
             }
+            //Formatting adding an empty line
+            System.out.println("");
         }
 
     // Updates the elements coincident with playerPos, treasurePos and monsterPos with corresponding numeric values 
@@ -87,9 +90,9 @@ public class GridState {
             // Place a one on the ithgrid location coincident with player position
             CurrentGrid[playerPos[0]][playerPos[1]]=1;
             // PLace a 5 where the grid location is coincident with treasurePos
-            // CurrentGrid[treasurePos[0]][treasurePos[1]]=5;
+            CurrentGrid[treasurePos[0]][treasurePos[1]]=5;
             // Place a 2 where the grid location is coincident with monsterPos
-            // CurrentGrid[monsterPos[0]][monsterPos[1]]=2;
+            CurrentGrid[monsterPos[0]][monsterPos[1]]=2;
         }
 
     // Sets all non-zero tiles back to zero.
@@ -98,9 +101,9 @@ public class GridState {
             // Place a zero on the the grid location coincident with player position
             CurrentGrid[playerPos[0]][playerPos[1]]=0;
             // PLace a zero where the grid location is coincident with treasurePos
-            // CurrentGrid[treasurePos[0]][treasurePos[1]]=0;
+            CurrentGrid[treasurePos[0]][treasurePos[1]]=0;
             // Place a zero where the grid location is coincident with monsterPos
-            // CurrentGrid[monsterPos[0]][monsterPos[1]]=0;
+            CurrentGrid[monsterPos[0]][monsterPos[1]]=0;
         }
     
     // Update the playerPos field based on the player-inputted MoveString.
@@ -165,8 +168,17 @@ public class GridState {
         else {
             return "InProgress";
         }
+
         
-        
+    }
+
+    public void FindPlayerDistanceFromTreasure() {
+        //Compute distance simple pythagoras theorem.
+        double distDouble = Math.sqrt(Math.pow(treasurePos[0]-playerPos[0], 2) + Math.pow(treasurePos[1]-playerPos[1], 2));
+        //Print the rounded distance to t
+        System.out.println("Donald's distance from the treasure is: " + Math.round(distDouble));
+        //return y;
+
     }
     
 
