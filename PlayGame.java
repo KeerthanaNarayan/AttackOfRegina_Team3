@@ -18,6 +18,11 @@ public class PlayGame {
 
         // Welcome the player
         System.out.println("Welcome to Regina: Origins");
+        //
+        System.out.println("You are Donald, and your task is to find the GOLDEN DOUGHNUT!");
+        System.out.println("But it's not gonna be easy kid ...");
+        System.out.println("You're ARCH NEMISIS Regina lurks in the darkness.");
+        System.out.println("FIND THE DOUGHNUT, EVADE REGINA!");
 
         // Instantiate the UserInput class
         // Query the user for the grid dimension.
@@ -36,7 +41,7 @@ public class PlayGame {
             CurrentGridState.PrintGrid();
 
             // Print the distance from the treasure
-            CurrentGridState.FindPlayerDistanceFromTreasure();
+            CurrentGridState.FindPlayerDistanceFromDoughnut();
 
             // ask the player to move
             // Prompt the user to input where to move. Returns either "u", "d", "l" or "r"
@@ -61,15 +66,8 @@ public class PlayGame {
                 System.out.println("YOU LOSE!");
             }
 
-        //}
-
-
         }
-
-
-
     }
-
 }
 
     

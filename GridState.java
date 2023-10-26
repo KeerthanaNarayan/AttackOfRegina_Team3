@@ -12,12 +12,13 @@ public class GridState {
     private int[][] CurrentGrid;
     //player position
     private int[] playerPos;
-    private int[] treasurePos;
-    private int[] monsterPos;
+    private int[] doughnutPos;
+    private int[] reginaPos;
+
 
     private Random rand = new Random();
     //treasure position
-    //monster position
+    //regina position
 
     // Constructor for GridState
     public GridState(int Size)
@@ -40,7 +41,7 @@ public class GridState {
 
         }
 
-        // populates the three fields playerPos, treasurePos, monsterPOs with three two-tuples from a random uniform distribution.
+        // populates the three fields playerPos, treasurePos, reginaPOs with three two-tuples from a random uniform distribution.
     public void InitialiseGridPositions() {
         // populate the position fields with random integers between 0 and gridSize
         // but how do we make sure that none of the randomly generates arrays specify the same point on creation?
@@ -50,18 +51,18 @@ public class GridState {
 
         // generate playerPos and treasurePos (at this point, there is a chance they are equal)
         playerPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        treasurePos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         
         // while they are equal, keep trying to generate a treasurePos which is not equal. If they are distinct, continue onwards.
-        while (Arrays.equals(playerPos,treasurePos)) {
-            treasurePos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        while (Arrays.equals(playerPos,doughnutPos)) {
+            doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         }
 
-        // do the same with monsterPos, checking coincidence with playerPos and treasurePos.
-        monsterPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        // do the same with reginaPos, checking coincidence with playerPos and treasurePos.
+        reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
 
-        while (Arrays.equals(playerPos, monsterPos) || Arrays.equals(treasurePos,monsterPos)) {
-            monsterPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        while (Arrays.equals(playerPos, reginaPos) || Arrays.equals(doughnutPos,reginaPos)) {
+            reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         }        
     }
 
@@ -71,9 +72,12 @@ public class GridState {
         {   
             // loop through each row
             for(int i = 0; i < CurrentGrid.length; i++)
-            {
-                // print a new line for each row
-                System.out.println("\n");
+            {   
+                //p
+                if (i>0)
+                {
+                    System.out.println();
+                }                    
                 for(int j = 0; j < CurrentGrid.length; j++){
                     // print each element of that row on the same line (no ln)
                     System.out.print(CurrentGrid[i][j] + "  ");
@@ -81,18 +85,17 @@ public class GridState {
                 }
             }
             //Formatting adding an empty line
-            System.out.println("");
+            System.out.println();
         }
 
-    // Updates the elements coincident with playerPos, treasurePos and monsterPos with corresponding numeric values 
+    // Updates the elements coincident with playerPos, treasurePos and reginaPos with corresponding numeric values 
     public void PlacePosOnGrid()
         {
             // Place a one on the ithgrid location coincident with player position
             CurrentGrid[playerPos[0]][playerPos[1]]=1;
-            // PLace a 5 where the grid location is coincident with treasurePos
-            CurrentGrid[treasurePos[0]][treasurePos[1]]=5;
-            // Place a 2 where the grid location is coincident with monsterPos
-            CurrentGrid[monsterPos[0]][monsterPos[1]]=2;
+            // CurrentGrid[doughnutPos[0]][doughnutPos[1]]=5;
+            // CurrentGrid[reginaPos[0]][reginaPos[1]]=2;
+            }
         }
 
     // Sets all non-zero tiles back to zero.
@@ -101,15 +104,13 @@ public class GridState {
             // Place a zero on the the grid location coincident with player position
             CurrentGrid[playerPos[0]][playerPos[1]]=0;
             // PLace a zero where the grid location is coincident with treasurePos
-            CurrentGrid[treasurePos[0]][treasurePos[1]]=0;
-            // Place a zero where the grid location is coincident with monsterPos
-            CurrentGrid[monsterPos[0]][monsterPos[1]]=0;
+            // CurrentGrid[doughnutPos[0]][doughnutPos[1]]=0;
+            // CurrentGrid[reginaPos[0]][reginaPos[1]]=0;
         }
     
     // Update the playerPos field based on the player-inputted MoveString.
     // Edge case handling for playerPos at grid boundary.
     public void UpdateGrid(String MoveString)
-
         {
 
         // Remember the previous position, in case we move off the board.    
@@ -158,11 +159,11 @@ public class GridState {
 
     
     public String FindGameState() {
-        if (Arrays.equals(playerPos,treasurePos)) {
+        if (Arrays.equals(playerPos,doughnutPos)) {
             return "Win";
         }
 
-        else if (Arrays.equals(playerPos,monsterPos)) {
+        else if (Arrays.equals(playerPos,reginaPos)) {
             return "Lose";
         }
         else {
@@ -172,13 +173,11 @@ public class GridState {
         
     }
 
-    public void FindPlayerDistanceFromTreasure() {
+    public void FindPlayerDistanceFromDoughnut() {
         //Compute distance simple pythagoras theorem.
-        double distDouble = Math.sqrt(Math.pow(treasurePos[0]-playerPos[0], 2) + Math.pow(treasurePos[1]-playerPos[1], 2));
-        //Print the rounded distance to t
-        System.out.println("Donald's distance from the treasure is: " + Math.round(distDouble));
-        //return y;
-
+        double distDouble = Math.sqrt(Math.pow(doughnutPos[0]-playerPos[0], 2) + Math.pow(doughnutPos[1]-playerPos[1], 2));
+        //Print the rounded distance to the terminal
+        System.out.println("Donald's distance from the doughnut is: " + Math.round(distDouble));
     }
     
 
