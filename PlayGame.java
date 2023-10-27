@@ -16,6 +16,8 @@ public class PlayGame {
     // Main method to play the game.
     public static void main(String[] args) {
 
+        System.out.println("HELLO");
+
         //Print the start messages
         StringMessages.PrintStartMessages();
 

@@ -10,19 +10,24 @@ public class GridState {
     private int gridSize;
     // The 2D grid
     private int[][] CurrentGrid;
+
+    // Prepare the Entity classes 
+    private MonsterEntity Regina;
+    private PlayerEntity Player;
+    private Entity Doughnut;
+
     //player position
-    private int[] playerPos;
-    private int[] doughnutPos;
-    private int[] reginaPos;
+    // private int[] playerPos;
+    // private int[] doughnutPos;
+    // private int[] regina.getReginaPos();
 
+    // private Random rand = new Random();
 
-    private Random rand = new Random();
-    //treasure position
-    //regina position
 
     // Constructor for GridState
     public GridState(int Size)
         {
+            // populate the grid with 0s initially
             gridSize = Size;
             // Create a 2D array of a size specified by gridSize
             CurrentGrid = new int[gridSize][gridSize];
@@ -36,22 +41,21 @@ public class GridState {
                 }
             }
 
-        this.InitialiseGridPositions();
+        this.InitialiseEntityPositions();
         this.PlacePosOnGrid();
-
         }
 
+
         // populates the three fields playerPos, treasurePos, reginaPOs with three two-tuples from a random uniform distribution.
-    public void InitialiseGridPositions() {
+    public void InitialiseEntityPositions() {
         // populate the position fields with random integers between 0 and gridSize
         // but how do we make sure that none of the randomly generates arrays specify the same point on creation?
-        rand.nextInt(this.gridSize);
-                
+        // rand.nextInt(this.gridSize);   
         // Need three UNIQUE positions!
 
         // generate playerPos and treasurePos (at this point, there is a chance they are equal)
-        playerPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        int[] playerPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        int[] doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         
         // while they are equal, keep trying to generate a treasurePos which is not equal. If they are distinct, continue onwards.
         while (Arrays.equals(playerPos,doughnutPos)) {
@@ -59,11 +63,17 @@ public class GridState {
         }
 
         // do the same with reginaPos, checking coincidence with playerPos and treasurePos.
-        reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
+        int[] reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
 
         while (Arrays.equals(playerPos, reginaPos) || Arrays.equals(doughnutPos,reginaPos)) {
             reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        }        
+        }
+
+        //instantiate Player, Doughnut and Monster with these positions.
+        Player = new PlayerEntity("Player", playerPos,1);
+        Doughnut = new Entity("Dougnut", doughnutPos,2);
+        Regina = new MonsterEntity("Regina",reginaPos,5);
+
     }
 
     
@@ -90,11 +100,13 @@ public class GridState {
 
     // Updates the elements coincident with playerPos, treasurePos and reginaPos with corresponding numeric values 
     public void PlacePosOnGrid()
-        {
+        {   
             // Place a one on the ithgrid location coincident with player position
-            CurrentGrid[playerPos[0]][playerPos[1]]=1;
-            // CurrentGrid[doughnutPos[0]][doughnutPos[1]]=5;
-            // CurrentGrid[reginaPos[0]][reginaPos[1]]=2;
+
+            // FETCH THIS FROM ENTITY_ID
+            CurrentGrid[Player.getEntityPos()[0]][Player.getEntityPos()[1]]=Player.getEntityId();
+            CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=Doughnut.getEntityId();
+            CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=Regina.getEntityId();
         }
         
 
@@ -102,10 +114,9 @@ public class GridState {
     public void CleanSlate()
         {
             // Place a zero on the the grid location coincident with player position
-            CurrentGrid[playerPos[0]][playerPos[1]]=0;
-            // PLace a zero where the grid location is coincident with treasurePos
-            // CurrentGrid[doughnutPos[0]][doughnutPos[1]]=0;
-            // CurrentGrid[reginaPos[0]][reginaPos[1]]=0;
+            CurrentGrid[Player.getEntityPos()[0]][Player.getEntityPos()[1]]=0;
+            CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=0;
+            CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=0;
         }
     
     // Update the playerPos field based on the player-inputted MoveString.
@@ -113,31 +124,17 @@ public class GridState {
     public void UpdateGrid(String MoveString)
         {
 
+
         // Remember the previous position, in case we move off the board.    
-        int[] previousPos = new int[]{playerPos[0], playerPos[1]};
+        int[] previousPos = new int[]{Player.getEntityPos()[0], Player.getEntityPos()[1]};
 
         // Convert the grid back to all zeros
         this.CleanSlate();
 
         try 
         {
-            switch (MoveString) {
-                case "u":
-                        playerPos[0]-=1;
-                        break;
-                case"d": 
-                        playerPos[0]+=1;
-                        break;
-                case"l": 
-                        playerPos[1]-=1;
-                        break;
-                case"r":
-                        playerPos[1]+=1;
-                        break;
-                default:
-                    // Don't need default as we did input validation on MoveString.
-                    break;
-        }
+            //Move the player
+            Player.MovePlayer(MoveString);
             // Place the entities back on the grid, with the updated player position playerPos
             PlacePosOnGrid();
         }
@@ -147,23 +144,18 @@ public class GridState {
             // Inform the player they are off the board.
             System.out.println(StringMessages.getOutOfBoundsMessage());   
             // Revert back to the latest "on-board" position.
-            playerPos[0] = previousPos[0];
-            playerPos[1] = previousPos[1];
+            Player.setEntityPos(previousPos);
             // Place the entities back on the board.
             PlacePosOnGrid();
-        }
-        
-            
-                
         }
 
     
     public String FindGameState() {
-        if (Arrays.equals(playerPos,doughnutPos)) {
+        if (Arrays.equals(Player.getEntityPos(),Doughnut.getEntityPos())) {
             return "Win";
         }
 
-        else if (Arrays.equals(playerPos,reginaPos)) {
+        else if (Arrays.equals(Player.getEntityPos(),Regina.getEntityPos())) {
             return "Lose";
         }
         else {
