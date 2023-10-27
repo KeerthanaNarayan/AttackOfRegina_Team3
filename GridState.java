@@ -1,6 +1,4 @@
-
 import java.util.Arrays;
-import java.util.Random;
 import java.lang.Math;
 import java.util.ArrayList;
 
@@ -32,8 +30,10 @@ public class GridState {
                     CurrentGrid[i][j] = 0;
                 }
             }
-
+        
+        // Instantiates the entity fields
         this.InitialiseEntityPositions();
+        // Updates the CurrentGrid and places the entities on it at the designated locations.
         this.PlacePosOnGrid();
         }
 
@@ -41,7 +41,7 @@ public class GridState {
         // populates the three fields playerPos, treasurePos, reginaPOs with three two-tuples from a random uniform distribution.
     public void InitialiseEntityPositions() {
         
-        // Ge
+        // Generate a list of 3 random coordinates (each element of the list is an array of 2 integers)
         ArrayList<int[]> coordinatesList = ArrayFunctions.generateDistinctCoordinates(3,gridSize);
         
         //instantiate Player, Doughnut and Monster with these positions.
@@ -80,8 +80,8 @@ public class GridState {
 
             // FETCH THIS FROM ENTITY_ID
             CurrentGrid[Player.getEntityPos()[0]][Player.getEntityPos()[1]]=Player.getEntityId();
-            CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=Doughnut.getEntityId();
-            CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=Regina.getEntityId();
+            // CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=Doughnut.getEntityId();
+            // CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=Regina.getEntityId();
         }
         
 
