@@ -3,13 +3,13 @@ import java.lang.Math;
 public class StringMessages {
 
     // UserInput.java string messages.
-    private static String AskGridSizeMessage =  "What is your desired grid size? Enter digit:";
-    private static String WhereToMoveMessage = "Where would you like to move?";
+    private static String AskGridSizeMessage =  "ENTER THE BATTLEFIELD!\nWhat is your desired BATTLEFIELD size? [Enter digit: ]";
+    private static String WhereToMoveMessage = "What is your next move?";
     private static String InvalidUserDigitMessage = "Invalid user input! Enter a digit! ";
     private static String[] InvalidUserMoveStringMessage = {"Invalid user input! User gave: ", ". Must be one of: "};
 
     // PlayGame.java string messages.
-    private static String WinMessage = "YOU WON!";
+    private static String WinMessage = "CONGRATULATIONS!\nYou have captured the GOLDEN DOUGHNUT and brought prosperity to Britain!\nHumanity is saved, for now...";
     private static String LoseMessage = "YOU LOSE!";
 
     // GridState.java string messages.
@@ -18,12 +18,13 @@ public class StringMessages {
 
     // Print customised messages on starting the game.
     public static void PrintStartMessages() {
-        // Welcome the player
-        System.out.println("Welcome to Regina: Origins");
-        System.out.println("You are Donald, and your task is to find the GOLDEN DOUGHNUT!");
-        System.out.println("But it's not gonna be easy kid ...");
-        System.out.println("You're ARCH NEMISIS Regina lurks in the darkness.");
-        System.out.println("FIND THE DOUGHNUT, EVADE REGINA!");
+        // Welcome the player - INTRO
+        System.out.println("========================================================\n\n\tR E G I N A : O R I G I N S\n\n========================================================");
+        System.out.println("The year is 2076. You are DON-ALD C-60.");
+        System.out.println("You must capture the GOLDEN DOUGHNUT to save humanity...");
+        System.out.println("...but it's not gonna be easy, kid!");
+        System.out.println("The sinister REGINAS seek the DONUGHT for themselves!");
+        System.out.println("FIND THE DOUGHNUT. EVADE THE REGINAS. SAVE HUMANITY.");
     }
 
     /*

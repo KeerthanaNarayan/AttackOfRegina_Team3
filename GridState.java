@@ -40,40 +40,15 @@ public class GridState {
 
         // populates the three fields playerPos, treasurePos, reginaPOs with three two-tuples from a random uniform distribution.
     public void InitialiseEntityPositions() {
-        // populate the position fields with random integers between 0 and gridSize
-        // but how do we make sure that none of the randomly generates arrays specify the same point on creation?
-        // rand.nextInt(this.gridSize);   
-        // Need three UNIQUE positions!
-
-        // generate playerPos and treasurePos (at this point, there is a chance they are equal)
-        int[] playerPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        int[] doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         
-        // while they are equal, keep trying to generate a treasurePos which is not equal. If they are distinct, continue onwards.
-        while (Arrays.equals(playerPos,doughnutPos)) {
-            doughnutPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        }
-
-        // do the same with reginaPos, checking coincidence with playerPos and treasurePos.
-        int[] reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-
-        while (Arrays.equals(playerPos, reginaPos) || Arrays.equals(doughnutPos,reginaPos)) {
-            reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
-        }
-        //instantiate Player, Doughnut and Monster with these positions.
-        Player = new PlayerEntity("Player", playerPos,1);
-        Doughnut = new Entity("Dougnut",doughnutPos,2);
-        Regina = new MonsterEntity("Regina",reginaPos,5);
-        
-        
-        /*
+        // Ge
         ArrayList<int[]> coordinatesList = ArrayFunctions.generateDistinctCoordinates(3,gridSize);
         
         //instantiate Player, Doughnut and Monster with these positions.
         Player = new PlayerEntity("Player", coordinatesList.get(0),1);
-        Doughnut = new Entity("Dougnut",coordinatesList.get(0),2);
-        Regina = new MonsterEntity("Regina",coordinatesList.get(0),5);
-        */
+        Doughnut = new Entity("Dougnut",coordinatesList.get(1),2);
+        Regina = new MonsterEntity("Regina",coordinatesList.get(2),5);
+        
         }
 
     
