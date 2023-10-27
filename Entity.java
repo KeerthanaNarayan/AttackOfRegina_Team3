@@ -24,7 +24,7 @@ public class Entity
 
     public int getEntityId()
     {
-        return entityID;
+        return entityId;
     }
 
     public void setEntityPos(int[] pos){

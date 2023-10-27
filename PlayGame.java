@@ -16,8 +16,6 @@ public class PlayGame {
     // Main method to play the game.
     public static void main(String[] args) {
 
-        System.out.println("HELLO");
-
         //Print the start messages
         StringMessages.PrintStartMessages();
 
@@ -54,7 +52,7 @@ public class PlayGame {
             // if Win, tell the user they have won
             // if lose tell teh user they have lost
             // if neither WIn or Lose, return to the start of the loop
-
+            
             if (GameState=="Win") {
                 System.out.println(StringMessages.getWinMessage());
             }

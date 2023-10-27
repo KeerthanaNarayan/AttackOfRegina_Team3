@@ -2,8 +2,7 @@
 import java.util.Arrays;
 import java.util.Random;
 import java.lang.Math;
-
-
+import java.util.ArrayList;
 
 public class GridState {
     //size of the grid
@@ -15,13 +14,6 @@ public class GridState {
     private MonsterEntity Regina;
     private PlayerEntity Player;
     private Entity Doughnut;
-
-    //player position
-    // private int[] playerPos;
-    // private int[] doughnutPos;
-    // private int[] regina.getReginaPos();
-
-    // private Random rand = new Random();
 
 
     // Constructor for GridState
@@ -68,13 +60,21 @@ public class GridState {
         while (Arrays.equals(playerPos, reginaPos) || Arrays.equals(doughnutPos,reginaPos)) {
             reginaPos = ArrayFunctions.GenerateRandomIntegerArray(0,this.gridSize,2);
         }
-
         //instantiate Player, Doughnut and Monster with these positions.
         Player = new PlayerEntity("Player", playerPos,1);
-        Doughnut = new Entity("Dougnut", doughnutPos,2);
+        Doughnut = new Entity("Dougnut",doughnutPos,2);
         Regina = new MonsterEntity("Regina",reginaPos,5);
-
-    }
+        
+        
+        /*
+        ArrayList<int[]> coordinatesList = ArrayFunctions.generateDistinctCoordinates(3,gridSize);
+        
+        //instantiate Player, Doughnut and Monster with these positions.
+        Player = new PlayerEntity("Player", coordinatesList.get(0),1);
+        Doughnut = new Entity("Dougnut",coordinatesList.get(0),2);
+        Regina = new MonsterEntity("Regina",coordinatesList.get(0),5);
+        */
+        }
 
     
     //Print the CurrentGrid to the terminal (loop row b)
@@ -115,42 +115,27 @@ public class GridState {
         {
             // Place a zero on the the grid location coincident with player position
             CurrentGrid[Player.getEntityPos()[0]][Player.getEntityPos()[1]]=0;
-            CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=0;
-            CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=0;
+            // CurrentGrid[Doughnut.getEntityPos()[0]][Doughnut.getEntityPos()[1]]=0;
+            // CurrentGrid[Regina.getEntityPos()[0]][Regina.getEntityPos()[1]]=0;
         }
     
     // Update the playerPos field based on the player-inputted MoveString.
     // Edge case handling for playerPos at grid boundary.
     public void UpdateGrid(String MoveString)
         {
-
-
-        // Remember the previous position, in case we move off the board.    
-        int[] previousPos = new int[]{Player.getEntityPos()[0], Player.getEntityPos()[1]};
-
         // Convert the grid back to all zeros
         this.CleanSlate();
 
-        try 
-        {
-            //Move the player
-            Player.MovePlayer(MoveString);
-            // Place the entities back on the grid, with the updated player position playerPos
-            PlacePosOnGrid();
+        //Move the player (does automatic validation internal to MovePlayer!)
+        Player.MovePlayer(MoveString, gridSize);
+
+        // Update the grid
+        this.PlacePosOnGrid();
+
         }
 
-        catch (ArrayIndexOutOfBoundsException e) 
-        {
-            // Inform the player they are off the board.
-            System.out.println(StringMessages.getOutOfBoundsMessage());   
-            // Revert back to the latest "on-board" position.
-            Player.setEntityPos(previousPos);
-            // Place the entities back on the board.
-            PlacePosOnGrid();
-        }
-
-    
-    public String FindGameState() {
+    public String FindGameState() 
+    {
         if (Arrays.equals(Player.getEntityPos(),Doughnut.getEntityPos())) {
             return "Win";
         }
@@ -167,13 +152,13 @@ public class GridState {
 
     public void FindPlayerDistanceFromDoughnut() {
         //Compute distance simple pythagoras theorem.
-        double distDouble = Math.sqrt(Math.pow(doughnutPos[0]-playerPos[0], 2) + Math.pow(doughnutPos[1]-playerPos[1], 2));
+        double distDouble = Math.sqrt(Math.pow(Doughnut.getEntityPos()[0]-Player.getEntityPos()[0], 2) + Math.pow(Doughnut.getEntityPos()[1]-Player.getEntityPos()[1], 2));
         //Print the rounded distance to the terminal
         System.out.println(StringMessages.getDistanceFromDougnutMessage(distDouble));
     }
     
+}
 
-    }
     
 
 
