@@ -16,17 +16,12 @@ public class PlayGame {
     // Main method to play the game.
     public static void main(String[] args) {
 
-        // Welcome the player
-        System.out.println("Welcome to Regina: Origins");
-        //
-        System.out.println("You are Donald, and your task is to find the GOLDEN DOUGHNUT!");
-        System.out.println("But it's not gonna be easy kid ...");
-        System.out.println("You're ARCH NEMISIS Regina lurks in the darkness.");
-        System.out.println("FIND THE DOUGHNUT, EVADE REGINA!");
+        //Print the start messages
+        StringMessages.PrintStartMessages();
 
-        // Instantiate the UserInput class
         // Query the user for the grid dimension.
         int gridSize = UserInput.AskGridDimension();
+
         // Instantiate the GridState class with the gridSize specified by the user.
         GridState CurrentGridState = new GridState(gridSize);
         // Initialise the grid, populating it with chips, donald and reginas.
@@ -51,7 +46,7 @@ public class PlayGame {
             // INCLUDE EDGE CASE FOR PLAYER ON BOUNDS OF BOARD
             CurrentGridState.UpdateGrid(MoveString);
 
-            // evaluate the grid state (to be either Win, lose or In progress)
+            // evaluate the grid state (to be either Win, lose or InProgress)
             GameState =CurrentGridState.FindGameState();
 
             // if Win, tell the user they have won
@@ -59,11 +54,11 @@ public class PlayGame {
             // if neither WIn or Lose, return to the start of the loop
 
             if (GameState=="Win") {
-                System.out.println("YOU WON!");
+                System.out.println(StringMessages.getWinMessage());
             }
 
             else if (GameState=="Lose") {
-                System.out.println("YOU LOSE!");
+                System.out.println(StringMessages.getLoseMessage());
             }
 
         }

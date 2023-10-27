@@ -9,7 +9,6 @@ public class UserInput {
 
     // field which holds the "allowed" movement options.
     private static String[] AllowedMovementStringArray = {"u","d","l","r"};
-    // private static int[] AllowedGridSizes = {1,2,3,4,5,6,7,8};
 
     public static int AskGridDimension(){
         Boolean isValidNumber = false;
@@ -18,7 +17,7 @@ public class UserInput {
             // instantiate the scanenr class
             Scanner scanner = new Scanner(System.in);
             // Ask the user where to move.
-            System.out.println("What is your desired grid size? Enter digit: ");
+            System.out.println(StringMessages.getAskGridSizeMessage());
             // Prompts the user to enter their input via the terminal
 
             //Error handling for non int value            
@@ -31,7 +30,7 @@ public class UserInput {
 
             // if the input is not accepted, remind the user of the acceptable input.
             else {
-                System.out.print("Invalid user input! Enter a digit! ");
+                System.out.print(StringMessages.getInvalidUserDigitMessage());
             }
 
         }
@@ -53,7 +52,7 @@ public class UserInput {
             // instantiate the scanenr class
             Scanner scanner = new Scanner(System.in);
             // Ask the user where to move.
-            System.out.println("Where would you like to move?");
+            System.out.println(StringMessages.getWhereToMoveMessage());
             // Prompts the user to enter their input via the terminal
             String MoveString = scanner.next() ;  // Read the user's movement input
 
@@ -67,7 +66,7 @@ public class UserInput {
 
             // if the input is not accepted, remind the user of the acceptable input.
             else {
-                System.out.print("Invalid user input! User gave: "+MoveString+". Must be one of: ");
+                System.out.print(StringMessages.getInvalidUserMoveStringMessage(MoveString));
                 Arrays.stream(AllowedMovementStringArray).forEach(e -> System.out.print(e + " "));
             }
 

@@ -95,8 +95,8 @@ public class GridState {
             CurrentGrid[playerPos[0]][playerPos[1]]=1;
             // CurrentGrid[doughnutPos[0]][doughnutPos[1]]=5;
             // CurrentGrid[reginaPos[0]][reginaPos[1]]=2;
-            }
         }
+        
 
     // Sets all non-zero tiles back to zero.
     public void CleanSlate()
@@ -145,7 +145,7 @@ public class GridState {
         catch (ArrayIndexOutOfBoundsException e) 
         {
             // Inform the player they are off the board.
-            System.out.println("You're at the edge of the board! Moving nowhere.");   
+            System.out.println(StringMessages.getOutOfBoundsMessage());   
             // Revert back to the latest "on-board" position.
             playerPos[0] = previousPos[0];
             playerPos[1] = previousPos[1];
@@ -177,7 +177,7 @@ public class GridState {
         //Compute distance simple pythagoras theorem.
         double distDouble = Math.sqrt(Math.pow(doughnutPos[0]-playerPos[0], 2) + Math.pow(doughnutPos[1]-playerPos[1], 2));
         //Print the rounded distance to the terminal
-        System.out.println("Donald's distance from the doughnut is: " + Math.round(distDouble));
+        System.out.println(StringMessages.getDistanceFromDougnutMessage(distDouble));
     }
     
 
