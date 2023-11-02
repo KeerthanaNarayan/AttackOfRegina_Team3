@@ -1,4 +1,7 @@
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 // General functions in an array.
 public class ArrayFunctions {
@@ -35,6 +38,23 @@ public class ArrayFunctions {
         return RandomIntArray;
     }
 
-    
+
+    // Function that returns a list of N distinct coordinates
+    public static ArrayList<int[]> generateDistinctCoordinates(int N, int gridSize) {
+        Set<String> existingCoordinates = new HashSet<>();
+        ArrayList<int[]> coordinatesList = new ArrayList<>();
+
+        while (coordinatesList.size() < N) {
+            int[] newCoord = ArrayFunctions.GenerateRandomIntegerArray(0, gridSize, 2);
+            String coordString = newCoord[0] + "," + newCoord[1];
+
+            if (!existingCoordinates.contains(coordString)) {
+                existingCoordinates.add(coordString);
+                coordinatesList.add(newCoord);
+            }
+        }
+
+        return coordinatesList;
+        }
 }
 
